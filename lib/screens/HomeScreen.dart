@@ -55,32 +55,52 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     body: Column(
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height*0.02,
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height*0.5,
-          color: Colors.blue,
-        ),
 
-        Container(height:MediaQuery.of(context).size.width*0.2,child: Center(child: RotatedBox(quarterTurns:2,child: Image(image: AssetImage('assets/images/arrow.png'))),)),
-        Row(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.2,
-            ),
-            Container(height:MediaQuery.of(context).size.width*0.2,child: RotatedBox(quarterTurns:1,child: Image(image: AssetImage('assets/images/arrow.png'),))),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.2,
-            ),
-            Container(height:MediaQuery.of(context).size.width*0.2,child: RotatedBox(quarterTurns:3,child: Image(image: AssetImage('assets/images/arrow.png')))),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.2,
-            ),
-          ],
+        SizedBox(
+          height: MediaQuery.of(context).size.height*0.04,
         ),
-        Container(height:MediaQuery.of(context).size.width*0.2,child: Center(child: Image(image: AssetImage('assets/images/arrow.png')),)),
-      ],
+        Center(
+          child: Text("BIVA ENGINEER",style: TextStyle(fontSize: 31,letterSpacing: 1,fontWeight: FontWeight.bold),),
+        ),
+        Center(
+          child: Text("INDIA OPC PVT LTD",style: TextStyle(fontSize: 19,letterSpacing: 1),),
+        ),
+        Center(
+          child: Text("NEW DELHI",style: TextStyle(fontSize: 19,letterSpacing: 1),),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height*0.05,
+        ),
+        StreamBuilder<BluetoothDeviceState>(
+          stream: widget.device.state,
+          initialData: BluetoothDeviceState.connecting,
+          builder: (c, snapshot) => Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.05,
+                  ),
+                  Text("Device Status :",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,letterSpacing: 0.5),),
+                  Text("   "+snapshot.data.toString().split('.')[1],style: TextStyle(fontSize: 16,color: snapshot.data.toString().split('.')[1]=="connected"?Colors.green:Colors.blue,fontWeight: FontWeight.bold),)
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.02,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.05,
+                  ),
+                  Text("Device UUID :",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,letterSpacing: 0.5),),
+                  Text("   "+widget.device.id.toString(),style: TextStyle(fontSize: 16),)
+                ],
+              ),
+            ],
+          ),
+        ),
+        ],
     ),
     );
   }
